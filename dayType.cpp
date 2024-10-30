@@ -7,40 +7,40 @@
 using namespace std;
 
 
-// 
 void dayType::setDay(string day_name)
 {
 	string day_prefix = formatDay(day_name);
 	string week_prefix;
-	currentDay = -1;
-	for (int i = 0; i < 7;)
+	for (int i = 0; i < 7; i++)
 	{
 		week_prefix = formatDay(daysOfWeek[i]);
-		if (week_prefix.find(day_prefix) != string::npos)
+		if (week_prefix == day_prefix)
 		{
 			currentDay = i;
 			break;
 		}
+		else
+			currentDay = -1;
 	}
 }
 
 void dayType::printDay() const
 {
-	if (Invariant)
+	if (Invariant())
 	{
 		string today = daysOfWeek[currentDay];
 		cout << "Today is " << today << "." << endl;
 	}
 	else
 	{
-		cout << err << endl;
+		cout << err << "." << endl;
 	}
 
 }
 
 string dayType::getDay() const
 {
-	if (Invariant)
+	if (Invariant())
 	{
 		string today = daysOfWeek[currentDay];
 		return today;
@@ -51,7 +51,7 @@ string dayType::getDay() const
 
 string dayType::nextDay() const
 {
-	if (Invariant)
+	if (Invariant())
 	{
 		int tomorrow_index = cycleWeek(1);
 		string tomorrow = daysOfWeek[tomorrow_index];
@@ -63,7 +63,7 @@ string dayType::nextDay() const
 
 string dayType::previousDay() const
 {
-	if (Invariant)
+	if (Invariant())
 	{
 		int yesterday_index = cycleWeek(-1);
 		string yesterday = daysOfWeek[yesterday_index];
@@ -75,7 +75,7 @@ string dayType::previousDay() const
 
 string dayType::addDays(int days) const
 {
-	if (Invariant)
+	if (Invariant())
 	{
 		int day_index = cycleWeek(days);
 		string new_day = daysOfWeek[day_index];
@@ -87,7 +87,7 @@ string dayType::addDays(int days) const
 
 // Constructors
 
-dayType::dayType(string day_name = "")
+dayType::dayType(string day_name)
 {
 	setDay(day_name);
 }
@@ -97,16 +97,16 @@ dayType::dayType(string day_name = "")
 int dayType::cycleWeek(int cycle_days) const
 {
 	int cycle_index = currentDay + cycle_days;
-	int day_index = cycle_index % 7;
+	int day_index = ((cycle_index % 7) + 7) % 7;
 	return day_index;
 }
 
 string dayType::formatDay(string day)
 {
-	string formatted = day.substr(0, 2);
-	for (int i = 0; i < 3; i++)
-		formatted[i] = (char)tolower(i);
-
+	string prefix = day.substr(0, 2);
+	string formatted = "";
+	for (char ch : prefix)
+		formatted += tolower(ch);
 	return formatted;
 }
 

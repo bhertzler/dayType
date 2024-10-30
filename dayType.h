@@ -53,7 +53,7 @@ private:
 	bool Invariant() const;					// Invariant function.
 
 	int currentDay;							// Variable to store the position of the day within the week.
-	const string err = "Invalid Day Name.";	// Message displayed if the value of currentDay is out of bounds.
+	const string err = "Invalid Day Name";	// Message displayed if the value of currentDay is out of bounds.
 	const string daysOfWeek[7] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };	// Array to store day names.
 
 };
